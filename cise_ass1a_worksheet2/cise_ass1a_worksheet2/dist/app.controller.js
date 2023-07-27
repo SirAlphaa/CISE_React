@@ -8,16 +8,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
+const articals_1 = require("./dummydata/articals");
 let AppController = exports.AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
     }
     getHello() {
         return this.appService.getHello();
+    }
+    getArticles() {
+        return articals_1.ARTICLES;
+    }
+    getArticlesById(id) {
+        return articals_1.ARTICLES.find((article) => article._id === id);
     }
 };
 __decorate([
@@ -26,6 +36,19 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], AppController.prototype, "getHello", null);
+__decorate([
+    (0, common_1.Get)('/api/articles'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Array)
+], AppController.prototype, "getArticles", null);
+__decorate([
+    (0, common_1.Get)('/api/articles/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Array)
+], AppController.prototype, "getArticlesById", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])
